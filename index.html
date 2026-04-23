@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DocLocate — Find Trusted Doctors Near You</title>
+  <meta name="description" content="DocLocate helps you find trusted, verified doctors near your new home. Filter by specialty, insurance, and language. Book appointments instantly." />
+  <meta property="og:title" content="DocLocate — Find Trusted Doctors Near You" />
+  <meta property="og:description" content="Find verified doctors, book appointments, and manage your healthcare all in one place." />
+  <meta property="og:type" content="website" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🩺</text></svg>" />
+
+  <script type="importmap">
+  {
+    "imports": {
+      "react": "https://esm.sh/react@18.2.0",
+      "react-dom/client": "https://esm.sh/react-dom@18.2.0/client",
+      "lucide-react": "https://esm.sh/lucide-react@0.360.0"
+    }
+  }
+  </script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'DM Sans', sans-serif; background: #f8fafc; }
+    #loading {
+      position: fixed; inset: 0; background: linear-gradient(135deg, #f0fdfa, #f8fafc);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      font-family: sans-serif; z-index: 9999;
+    }
+    .spin {
+      width: 44px; height: 44px;
+      border: 3px solid #e2e8f0;
+      border-top-color: #0d9488;
+      border-radius: 50%;
+      animation: spin 0.9s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+</head>
+
+<body>
+  <div id="loading">
+    <div style="width:52px;height:52px;background:linear-gradient(135deg,#0d9488,#0891b2);border-radius:16px;display:flex;align-items:center;justify-content:center;margin-bottom:20px;font-size:28px">🩺</div>
+    <div class="spin"></div>
+    <p style="margin-top:18px;color:#64748b;font-size:14px;font-weight:600;letter-spacing:0.01em">Loading DocLocate…</p>
+  </div>
+  <div id="root"></div>
+
+  <script type="module">
+    import React from 'react';
+    import { createRoot } from 'react-dom/client';
+    import * as Lucide from 'lucide-react';
+
+    (async () => {
+      try {
+        // Determine the correct path to index.jsx
+        // Works for: localhost file server, GitHub Pages (repo subpath), root hosting
+        const base = new URL('.', document.baseURI).href;
+        const jsxPath = base + 'app.jsx';
+
+        const res = await fetch(jsxPath);
+        if (!res.ok) throw new Error(`Could not load app.jsx (${res.status})`);
+        const jsxCode = await res.text();
+
+        // Strip ES module imports
+        let cleanCode = jsxCode.replace(/import\s+[\s\S]*?from\s+['"][^'"]+['"];?/g, '');
+        // Remove 'export default'
+        cleanCode = cleanCode.replace(/export\s+default\s+function/g, 'function');
+
+        // Transpile JSX → JS
+        const transformed = Babel.transform(cleanCode, { presets: ['react'] }).code;
+
+        // Expose every React hook + all Lucide icons in scope
+        const scope = {
+          React,
+          useState:     React.useState,
+          useEffect:    React.useEffect,
+          useCallback:  React.useCallback,
+          useRef:       React.useRef,
+          useMemo:      React.useMemo,
+          useContext:   React.useContext,
+          useReducer:   React.useReducer,
+          ...Lucide
+        };
+
+        const createComponent = new Function(...Object.keys(scope), `
+          ${transformed}
+          return DocLocate;
+        `);
+
+        const DocLocateComponent = createComponent(...Object.values(scope));
+
+        document.getElementById('loading').style.display = 'none';
+        const root = createRoot(document.getElementById('root'));
+        root.render(React.createElement(DocLocateComponent));
+      } catch (err) {
+        console.error('DocLocate load error:', err);
+        document.getElementById('loading').style.display = 'none';
+        document.getElementById('root').innerHTML = `
+          <div style="padding:48px;max-width:640px;margin:0 auto;font-family:system-ui,sans-serif">
+            <div style="font-size:48px;margin-bottom:20px">⚠️</div>
+            <h2 style="color:#dc2626;font-size:20px;margin-bottom:12px">Error Loading DocLocate</h2>
+            <pre style="background:#fef2f2;border:1px solid #fecaca;border-radius:12px;padding:16px;font-size:12px;color:#7f1d1d;overflow:auto;white-space:pre-wrap">${err.toString()}</pre>
+            <p style="color:#64748b;font-size:13px;margin-top:16px">Try hard-refreshing the page (Cmd+Shift+R)</p>
+          </div>`;
+      }
+    })();
+  </script>
+</body>
+</html>
