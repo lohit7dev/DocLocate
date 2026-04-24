@@ -22,7 +22,7 @@ function getDemoUsers() {
   try { return JSON.parse(localStorage.getItem(DEMO_USERS_KEY) || "[]"); } catch { return []; }
 }
 function saveDemoUsers(users) {
-  try { localStorage.setItem(DEMO_USERS_KEY, JSON.stringify(users)); } catch {}
+  try { localStorage.setItem(DEMO_USERS_KEY, JSON.stringify(users)); } catch { }
 }
 function makeDemoToken(userId) {
   return btoa(JSON.stringify({ user_id: userId, exp: Date.now() + 7 * 86400000 }));
@@ -87,14 +87,14 @@ async function apiFetch(path, { method = "GET", body, token } = {}) {
 // ─── FALLBACK DATA ────────────────────────────────────────────────────────────
 
 const FALLBACK_DOCTORS = [
-  { id: 1, name: "Dr. Serena Voss", specialty: "Internal Medicine", clinic_name: "Clearwater Medical Center", clinic_id: 1, years: 14, rating: 4.9, reviews: 218, insurance: ["Aetna","Blue Cross","Cigna","UnitedHealth"], languages: ["English","Spanish","French"], next_available: "Tomorrow, 9:00 AM", verified: 1, accepting: 1, avatar: "SV", color: "#0d9488", fee: 180, distance: "0.8 mi", bio: "Board-certified internist specializing in preventive care and chronic disease management for adults." },
-  { id: 2, name: "Dr. Kwame Asante", specialty: "Family Medicine", clinic_name: "Riverside Family Health", clinic_id: 2, years: 9, rating: 4.8, reviews: 143, insurance: ["Aetna","Humana","Medicare","Medicaid"], languages: ["English","Twi","French"], next_available: "Today, 3:30 PM", verified: 1, accepting: 1, avatar: "KA", color: "#0891b2", fee: 150, distance: "1.2 mi", bio: "Compassionate family physician with a focus on whole-patient wellness and immigrant health." },
-  { id: 3, name: "Dr. Lantu Saikia", specialty: "Cardiology", clinic_name: "Summit Heart Institute", clinic_id: 3, years: 22, rating: 5.0, reviews: 391, insurance: ["Blue Cross","Cigna","UnitedHealth","Medicare"], languages: ["English","Mandarin","Cantonese"], next_available: "Thu, Apr 25", verified: 1, accepting: 1, avatar: "LS", color: "#7c3aed", fee: 320, distance: "2.1 mi", bio: "Fellowship-trained cardiologist with over two decades in interventional cardiology." },
-  { id: 4, name: "Dr. Arjun Mehta", specialty: "Dermatology", clinic_name: "SkinCare & Wellness Clinic", clinic_id: 4, years: 7, rating: 4.7, reviews: 89, insurance: ["Aetna","Cigna","Blue Shield"], languages: ["English","Hindi","Gujarati"], next_available: "Fri, Apr 26", verified: 1, accepting: 1, avatar: "AM", color: "#d97706", fee: 210, distance: "1.7 mi", bio: "Modern dermatologist blending medical and cosmetic expertise. Special interest in skin of color." },
-  { id: 5, name: "Dr. Lena Hoffmann", specialty: "Psychiatry", clinic_name: "Tranquil Mind Health", clinic_id: 5, years: 16, rating: 4.9, reviews: 174, insurance: ["Aetna","Cigna","UnitedHealth","Humana"], languages: ["English","German","Dutch"], next_available: "Mon, Apr 28", verified: 1, accepting: 1, avatar: "LH", color: "#db2777", fee: 260, distance: "3.4 mi", bio: "Psychiatrist specializing in anxiety, adjustment disorders, and life transitions." },
-  { id: 6, name: "Dr. Omar El-Amin", specialty: "Orthopedics", clinic_name: "Active Life Orthopedic Center", clinic_id: 6, years: 11, rating: 4.8, reviews: 207, insurance: ["Blue Cross","Medicare","Cigna"], languages: ["English","Arabic"], next_available: "Wed, Apr 30", verified: 1, accepting: 0, avatar: "OE", color: "#059669", fee: 290, distance: "4.0 mi", bio: "Sports medicine and orthopedic surgeon with expertise in minimally invasive joint procedures." },
-  { id: 7, name: "Dr. Priya Nair", specialty: "Pediatrics", clinic_name: "Lakeside Pediatric Associates", clinic_id: 7, years: 8, rating: 4.9, reviews: 156, insurance: ["Aetna","Humana","Medicaid","CHIP"], languages: ["English","Malayalam","Tamil"], next_available: "Tomorrow, 10:00 AM", verified: 1, accepting: 1, avatar: "PN", color: "#2563eb", fee: 140, distance: "1.5 mi", bio: "Warm and experienced pediatrician focused on developmental milestones and preventive care." },
-  { id: 8, name: "Dr. Sofia Rivera", specialty: "OB/GYN", clinic_name: "Downtown Women's Health", clinic_id: 8, years: 12, rating: 4.8, reviews: 301, insurance: ["Aetna","Blue Cross","UnitedHealth","Blue Shield"], languages: ["English","Spanish","Portuguese"], next_available: "Fri, Apr 26", verified: 1, accepting: 1, avatar: "SR", color: "#c026d3", fee: 220, distance: "2.3 mi", bio: "OB/GYN providing comprehensive women's healthcare including prenatal and family planning." },
+  { id: 1, name: "Dr. Serena Voss", specialty: "Internal Medicine", clinic_name: "Clearwater Medical Center", clinic_id: 1, years: 14, rating: 4.9, reviews: 218, insurance: ["Aetna", "Blue Cross", "Cigna", "UnitedHealth"], languages: ["English", "Spanish", "French"], next_available: "Tomorrow, 9:00 AM", verified: 1, accepting: 1, avatar: "SV", color: "#0d9488", fee: 180, distance: "0.8 mi", bio: "Board-certified internist specializing in preventive care and chronic disease management for adults." },
+  { id: 2, name: "Dr. Kwame Asante", specialty: "Family Medicine", clinic_name: "Riverside Family Health", clinic_id: 2, years: 9, rating: 4.8, reviews: 143, insurance: ["Aetna", "Humana", "Medicare", "Medicaid"], languages: ["English", "Twi", "French"], next_available: "Today, 3:30 PM", verified: 1, accepting: 1, avatar: "KA", color: "#0891b2", fee: 150, distance: "1.2 mi", bio: "Compassionate family physician with a focus on whole-patient wellness and immigrant health." },
+  { id: 3, name: "Dr. Lantu Saikia", specialty: "Cardiology", clinic_name: "Summit Heart Institute", clinic_id: 3, years: 22, rating: 5.0, reviews: 391, insurance: ["Blue Cross", "Cigna", "UnitedHealth", "Medicare"], languages: ["English", "Mandarin", "Cantonese"], next_available: "Thu, Apr 25", verified: 1, accepting: 1, avatar: "LS", color: "#7c3aed", fee: 320, distance: "2.1 mi", bio: "Fellowship-trained cardiologist with over two decades in interventional cardiology." },
+  { id: 4, name: "Dr. Arjun Mehta", specialty: "Dermatology", clinic_name: "SkinCare & Wellness Clinic", clinic_id: 4, years: 7, rating: 4.7, reviews: 89, insurance: ["Aetna", "Cigna", "Blue Shield"], languages: ["English", "Hindi", "Gujarati"], next_available: "Fri, Apr 26", verified: 1, accepting: 1, avatar: "AM", color: "#d97706", fee: 210, distance: "1.7 mi", bio: "Modern dermatologist blending medical and cosmetic expertise. Special interest in skin of color." },
+  { id: 5, name: "Dr. Lena Hoffmann", specialty: "Psychiatry", clinic_name: "Tranquil Mind Health", clinic_id: 5, years: 16, rating: 4.9, reviews: 174, insurance: ["Aetna", "Cigna", "UnitedHealth", "Humana"], languages: ["English", "German", "Dutch"], next_available: "Mon, Apr 28", verified: 1, accepting: 1, avatar: "LH", color: "#db2777", fee: 260, distance: "3.4 mi", bio: "Psychiatrist specializing in anxiety, adjustment disorders, and life transitions." },
+  { id: 6, name: "Dr. Omar El-Amin", specialty: "Orthopedics", clinic_name: "Active Life Orthopedic Center", clinic_id: 6, years: 11, rating: 4.8, reviews: 207, insurance: ["Blue Cross", "Medicare", "Cigna"], languages: ["English", "Arabic"], next_available: "Wed, Apr 30", verified: 1, accepting: 0, avatar: "OE", color: "#059669", fee: 290, distance: "4.0 mi", bio: "Sports medicine and orthopedic surgeon with expertise in minimally invasive joint procedures." },
+  { id: 7, name: "Dr. Priya Nair", specialty: "Pediatrics", clinic_name: "Lakeside Pediatric Associates", clinic_id: 7, years: 8, rating: 4.9, reviews: 156, insurance: ["Aetna", "Humana", "Medicaid", "CHIP"], languages: ["English", "Malayalam", "Tamil"], next_available: "Tomorrow, 10:00 AM", verified: 1, accepting: 1, avatar: "PN", color: "#2563eb", fee: 140, distance: "1.5 mi", bio: "Warm and experienced pediatrician focused on developmental milestones and preventive care." },
+  { id: 8, name: "Dr. Sofia Rivera", specialty: "OB/GYN", clinic_name: "Downtown Women's Health", clinic_id: 8, years: 12, rating: 4.8, reviews: 301, insurance: ["Aetna", "Blue Cross", "UnitedHealth", "Blue Shield"], languages: ["English", "Spanish", "Portuguese"], next_available: "Fri, Apr 26", verified: 1, accepting: 1, avatar: "SR", color: "#c026d3", fee: 220, distance: "2.3 mi", bio: "OB/GYN providing comprehensive women's healthcare including prenatal and family planning." },
 ];
 
 const FALLBACK_CLINICS = [
@@ -186,7 +186,23 @@ const globalCSS = `
 
   @media (max-width: 768px) {
     .auth-left { display: none !important; }
-    .auth-right { width: 100% !important; }
+    .auth-right { width: 100% !important; padding: 40px 24px !important; }
+    .mobile-stack { flex-direction: column !important; align-items: stretch !important; }
+    .mobile-hidden { display: none !important; }
+    .desktop-hidden { display: flex !important; }
+    .mobile-wrap { flex-wrap: wrap !important; }
+    .mobile-text-center { text-align: center !important; }
+    .stats-bar { flex-direction: column !important; gap: 32px !important; padding: 32px 24px !important; }
+    .hero-container { padding: 40px 20px 32px !important; }
+    .nav-container { padding: 0 16px !important; }
+    .responsive-grid { grid-template-columns: 1fr !important; }
+    .responsive-grid-doctor { grid-template-columns: 1fr !important; }
+    .doctor-card-content { flex-direction: column !important; align-items: flex-start !important; }
+    .doctor-card-avatar { width: 64px !important; height: 64px !important; font-size: 20px !important; margin-bottom: 12px; }
+    .chat-panel { width: 100% !important; right: 0 !important; bottom: 0 !important; border-radius: 20px 20px 0 0 !important; }
+  }
+  @media (min-width: 769px) {
+    .desktop-hidden { display: none !important; }
   }
 `;
 
@@ -627,7 +643,7 @@ function Navbar({ onBack, view, user, onLogout, onNavClick }) {
       transition: "all 0.3s",
       boxShadow: scrolled ? "0 4px 24px rgba(0,0,0,0.06)" : "none",
     }}>
-      <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 24px", display: "flex", alignItems: "center", justifyContent: "space-between", height: 66 }}>
+      <div className="nav-container" style={{ maxWidth: 1280, margin: "0 auto", padding: "0 24px", display: "flex", alignItems: "center", justifyContent: "space-between", height: 66 }}>
         <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
           {view !== "home" && (
             <button onClick={onBack} style={{ background: "none", border: "none", cursor: "pointer", padding: "6px 8px", marginRight: 2, borderRadius: 8, color: "#64748b", display: "flex", alignItems: "center", gap: 4, fontSize: 13, fontWeight: 600, transition: "all 0.15s", fontFamily: "inherit" }}
@@ -693,7 +709,7 @@ function ClinicsPage({ token, onSelectClinic }) {
     setLoading(true);
     apiFetch("/clinics", { token })
       .then(data => { if (data.length) setClinics(data); })
-      .catch(() => {})
+      .catch(() => { })
       .finally(() => setLoading(false));
   }, [token]);
 
@@ -776,7 +792,7 @@ function ClinicsPage({ token, onSelectClinic }) {
       </div>
 
       {/* Clinic Cards Grid */}
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))", gap: 20 }}>
+      <div className="responsive-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))", gap: 20 }}>
         {loading ? (
           Array.from({ length: 8 }).map((_, i) => (
             <div key={i} style={{ background: "white", borderRadius: 20, overflow: "hidden", border: "1px solid #e2e8f0" }}>
@@ -853,7 +869,7 @@ function SearchHero({ onSearch, user }) {
   const popularSearches = ["Internal Medicine", "Family Doctor", "Cardiology", "Pediatrics", "Psychiatry"];
 
   return (
-    <div style={{
+    <div className="hero-container" style={{
       background: "linear-gradient(160deg, #f0fdfa 0%, #ecfeff 40%, #f8fafc 100%)",
       padding: "72px 24px 56px", textAlign: "center", position: "relative", overflow: "hidden",
     }}>
@@ -888,10 +904,10 @@ function SearchHero({ onSearch, user }) {
             placeholder="Search specialty, clinic, or insurance..."
             style={{ flex: 1, border: "none", outline: "none", fontSize: 15, color: "#0f172a", fontFamily: "'DM Sans', sans-serif", background: "transparent", padding: "4px 0" }}
           />
-          <button onClick={() => setNearMe(!nearMe)} style={{ display: "flex", alignItems: "center", gap: 6, padding: "8px 14px", borderRadius: 12, border: "none", background: nearMe ? "rgba(13,148,136,0.12)" : "#f8fafc", color: nearMe ? "#0d9488" : "#64748b", fontSize: 13, fontWeight: 600, cursor: "pointer", transition: "all 0.2s", whiteSpace: "nowrap", fontFamily: "inherit" }}>
+          <button onClick={() => setNearMe(!nearMe)} className="mobile-hidden" style={{ display: "flex", alignItems: "center", gap: 6, padding: "8px 14px", borderRadius: 12, border: "none", background: nearMe ? "rgba(13,148,136,0.12)" : "#f8fafc", color: nearMe ? "#0d9488" : "#64748b", fontSize: 13, fontWeight: 600, cursor: "pointer", transition: "all 0.2s", whiteSpace: "nowrap", fontFamily: "inherit" }}>
             <LocateFixed size={13} /> Near Me
           </button>
-          <button onClick={() => onSearch(query)} className="btn-primary" style={{ padding: "10px 24px", fontSize: 14, borderRadius: 13 }}>
+          <button onClick={() => onSearch(query)} className="btn-primary" style={{ padding: "10px 24px", fontSize: 14, borderRadius: 13, flexShrink: 0 }}>
             Search
           </button>
         </div>
@@ -930,8 +946,8 @@ function DoctorCard({ doctor, onSelect }) {
         position: "relative", overflow: "hidden",
       }}>
       <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 3, background: `linear-gradient(90deg, ${color}, ${color}60)`, opacity: hovered ? 1 : 0, transition: "opacity 0.3s" }} />
-      <div style={{ display: "flex", gap: 16, marginBottom: 16 }}>
-        <div style={{ width: 64, height: 64, borderRadius: 18, background: `linear-gradient(135deg, ${color}20, ${color}40)`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, border: `2px solid ${color}25` }}>
+      <div className="doctor-card-content" style={{ display: "flex", gap: 16, marginBottom: 16 }}>
+        <div className="doctor-card-avatar" style={{ width: 64, height: 64, borderRadius: 18, background: `linear-gradient(135deg, ${color}20, ${color}40)`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, border: `2px solid ${color}25` }}>
           <span style={{ fontSize: 18, fontWeight: 900, color }}>{doctor.avatar}</span>
         </div>
         <div style={{ flex: 1, minWidth: 0 }}>
@@ -1140,7 +1156,7 @@ function ChatPanel({ doctor, onClose }) {
   };
 
   return (
-    <div style={{ position: "fixed", bottom: 24, right: 24, width: 360, background: "white", borderRadius: 24, boxShadow: "0 24px 64px rgba(0,0,0,0.18), 0 0 0 1px rgba(0,0,0,0.05)", zIndex: 200, overflow: "hidden", fontFamily: "'DM Sans', sans-serif" }}>
+    <div className="chat-panel" style={{ position: "fixed", bottom: 24, right: 24, width: 360, background: "white", borderRadius: 24, boxShadow: "0 24px 64px rgba(0,0,0,0.18), 0 0 0 1px rgba(0,0,0,0.05)", zIndex: 200, overflow: "hidden", fontFamily: "'DM Sans', sans-serif" }}>
       <div style={{ background: "linear-gradient(135deg, #0d9488, #0891b2)", padding: "16px 20px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
         <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
           <div style={{ width: 40, height: 40, borderRadius: 12, background: "rgba(255,255,255,0.2)", display: "flex", alignItems: "center", justifyContent: "center" }}>
@@ -1214,7 +1230,7 @@ function DoctorProfile({ doctor, onBack, token }) {
         </div>
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, marginBottom: 20 }}>
+      <div className="responsive-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, marginBottom: 20 }}>
         {[
           { icon: Shield, label: "Insurance Accepted", items: doctor.insurance || [], itemColor: "#64748b", iconColor: "#0d9488", bg: "#f0fdfa", border: "#99f6e4", itemBg: "#f8fafc", itemBorder: "#e2e8f0" },
           { icon: Globe, label: "Languages Spoken", items: doctor.languages || [], itemColor: "#0891b2", iconColor: "#0891b2", bg: "#f0f9ff", border: "#bae6fd", itemBg: "#ecfeff", itemBorder: "#a5f3fc" },
@@ -1283,7 +1299,7 @@ function DoctorProfile({ doctor, onBack, token }) {
 function StatsBar() {
   return (
     <div style={{ background: "white", borderBottom: "1px solid #e2e8f0", borderTop: "1px solid #e2e8f0" }}>
-      <div style={{ maxWidth: 960, margin: "0 auto", padding: "20px 24px", display: "flex", justifyContent: "center", gap: 56, flexWrap: "wrap" }}>
+      <div className="stats-bar" style={{ maxWidth: 960, margin: "0 auto", padding: "20px 24px", display: "flex", justifyContent: "center", gap: 56, flexWrap: "wrap" }}>
         {[
           ["2,400+", "Verified Doctors"],
           ["180+", "Partner Clinics"],
@@ -1326,7 +1342,7 @@ export default function DocLocate() {
         setUser(JSON.parse(savedUser));
         setAuthView("app");
       }
-    } catch {}
+    } catch { }
   }, []);
 
   // Load data from backend
@@ -1344,12 +1360,12 @@ export default function DocLocate() {
 
   const handleLogin = (userData, tok) => {
     setUser(userData); setToken(tok); setAuthView("app");
-    try { localStorage.setItem("doclocate_token", tok); localStorage.setItem("doclocate_user", JSON.stringify(userData)); } catch {}
+    try { localStorage.setItem("doclocate_token", tok); localStorage.setItem("doclocate_user", JSON.stringify(userData)); } catch { }
   };
 
   const handleLogout = () => {
     setUser(null); setToken(null); setAuthView("login");
-    try { localStorage.removeItem("doclocate_token"); localStorage.removeItem("doclocate_user"); } catch {}
+    try { localStorage.removeItem("doclocate_token"); localStorage.removeItem("doclocate_user"); } catch { }
   };
 
   const filtered = doctors
@@ -1516,7 +1532,7 @@ export default function DocLocate() {
               <p style={{ color: "#64748b", fontSize: 14 }}>Try adjusting your filters</p>
             </div>
           ) : (
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(320px, 1fr))", gap: 20 }}>
+            <div className="responsive-grid-doctor" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))", gap: 20 }}>
               {filtered.map(doc => <DoctorCard key={doc.id} doctor={doc} onSelect={handleSelect} />)}
             </div>
           )}
